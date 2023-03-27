@@ -132,7 +132,14 @@ var UserForm = /** @class */function () {
     this.onSetAgeClick = function () {
       _this.model.setRandomAge();
     };
+    this.bindModel();
   }
+  UserForm.prototype.bindModel = function () {
+    var _this = this;
+    this.model.on('change', function () {
+      _this.render();
+    });
+  };
   UserForm.prototype.eventsMap = function () {
     return {
       'click:.set-age': this.onSetAgeClick
@@ -156,6 +163,7 @@ var UserForm = /** @class */function () {
     return "\n      <div>\n        <h1>User Form</h1>\n        <div>User name: ".concat(this.model.get('name'), "</div>\n        <div>User age: ").concat(this.model.get('age'), "</div>\n        <input />\n        <button>Click Me</button>\n        <button class=\"set-age\">Set Random Age</button>\n      </div>\n    ");
   };
   UserForm.prototype.render = function () {
+    this.parent.innerHTML = '';
     var templateElement = document.createElement('template');
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);
