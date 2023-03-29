@@ -141,9 +141,15 @@ var View = /*#__PURE__*/function () {
     _classCallCheck(this, View);
     this.parent = parent;
     this.model = model;
+    this.regions = {};
     this.bindModel();
   }
   _createClass(View, [{
+    key: "regionsMap",
+    value: function regionsMap() {
+      return {};
+    }
+  }, {
     key: "eventsMap",
     value: function eventsMap() {
       return {};
@@ -174,12 +180,25 @@ var View = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "mapRegions",
+    value: function mapRegions(fragment) {
+      var regionsMap = this.regionsMap();
+      for (var key in regionsMap) {
+        var selector = regionsMap[key];
+        var element = fragment.querySelector(selector);
+        if (element) {
+          this.regions[key] = element;
+        }
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       this.parent.innerHTML = '';
       var templateElement = document.createElement('template');
       templateElement.innerHTML = this.template();
       this.bindEvents(templateElement.content);
+      this.mapRegions(templateElement.content);
       this.parent.append(templateElement.content);
     }
   }]);
@@ -5810,7 +5829,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50110" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53033" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
